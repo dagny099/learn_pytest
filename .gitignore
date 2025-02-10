@@ -1,0 +1,42 @@
+# Python compilation files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.pytest/    # Your specific virtual environment
+.env        # Environment variables file
+.pytest/*
+
+# Testing and Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+coverage_html/
+
+# IDE settings (if you're using VS Code or PyCharm)
+.idea/
+.vscode/
+
+# Database
+*.sqlite3      # SQLite database files
+*.db           # Other database files
+
+# Secrets and credentials
+mysql_credentials.txt
+config.ini
+secrets.yaml
+
+# Logs
+*.log
+logs/
+
+# OS generated files
+.DS_Store    # macOS specific
+Thumbs.db    # Windows specific
+
+# Keep these files
+!docs/*.md
+!README.md
+!CONTRIBUTING.md
+!LICENSE
