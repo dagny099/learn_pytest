@@ -32,8 +32,8 @@ secrets.yaml
 logs/
 
 # OS generated files
-.DS_Store    # macOS specific
-Thumbs.db    # Windows specific
+.DS_Store
+Thumbs.db
 
 # Keep these files
 !docs/*.md
