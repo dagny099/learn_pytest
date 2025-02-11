@@ -15,6 +15,30 @@ from analytics import WorkoutAnalytics
 # Configuration
 DB_CONNECTION = "mysql+pymysql://barbs:barbs@localhost:3306/sweat"
 
+st.markdown("""
+    <style>
+        div[data-testid="column"].st-emotion-cache-keje6w.e1f1d6gn3{
+            text-align: center;
+            background-color: #eeeeee;
+            color: #666666;
+            border-bottom: 1px dashed #808080;
+        }
+        div[data-testid="column"].st-emotion-cache-1r6slb0.e1f1d6gn3{
+            text-align: center;
+            background-color: #eeeeee;
+            color: #666666;
+            border-bottom: 1px dashed #808080;
+        }
+        div[data-testid="column"].st-emotion-cache-12w0qpk.e1f1d6gn3{
+            text-align: center;
+            background-color: #eeeeee;
+            border: 2px solid blue;
+            border-radius: 10px;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+
 class DatabaseConnectionError(Exception):
     """Custom exception for database connection issues."""
     pass
@@ -132,20 +156,22 @@ def main():
     st.sidebar.header("Analysis Controls")
     
     # Date range selection with smart defaults
-    default_end_date = datetime.now() - timedelta(days=360*3)
-    default_start_date = default_end_date - timedelta(days=360)
+    default_end_date = datetime.now() - timedelta(days=365*4)
+    default_start_date = default_end_date - timedelta(days=365*1)
     
     start_date = st.sidebar.date_input(
         "Start Date",
         value=default_start_date,
-        max_value=default_end_date
+        max_value=default_end_date,
+        format="MM/DD/YYYY"
     )
     
     end_date = st.sidebar.date_input(
         "End Date",
         value=default_end_date,
         min_value=start_date,
-        max_value=default_end_date
+        max_value=default_end_date,
+        format="MM/DD/YYYY"
     )
     
     # Metric selection
@@ -192,7 +218,7 @@ def main():
             end_date=end_date,
             metric_name=metric_name
         )
-        st.write(df)
+
         if df.empty:
             st.warning("No data available for the selected date range.")
             st.stop()
@@ -206,34 +232,43 @@ def main():
         )
         
         # Display summary statistics
-        st.header("Summary Statistics")
-        col1, col2, col3 = st.columns(3)
+        st.subheader(f"{selected_metric} Summary Statistics ")
+        col1, col2, col3, col4 = st.columns(4)
+        col5, col6, col7 = st.columns(3)
         
         with col1:
-            st.metric("Total", f"{summary_stats['total']:.2f}")
-        with col2:
             st.metric("Average", f"{summary_stats['mean']:.2f}")
+        with col2:
+            st.metric("Median", f"{summary_stats['std']:.2f}")
         with col3:
             st.metric("Standard Deviation", f"{summary_stats['std']:.2f}")
+        with col4:
+            st.metric("Skew", f"{summary_stats['skew']:.2f}")
+        with col5:
+            st.metric("Earliest Workout Date", f"{df['workout_date'].min().strftime('%m-%d-%Y')}")
+        with col6:
+            st.metric("Latest Workout Date", f"{df['workout_date'].max().strftime('%m-%d-%Y')}")
+        with col7:
+            st.metric("# workouts", f"{summary_stats['count']}")
+
+        # Display histogram
+        st.subheader("Distribution")
+        fig = create_histogram(df, metric_name, agg_type)
+        st.plotly_chart(fig, use_container_width=True)
         
         # Display aggregated data table
-        st.header("Aggregated Data")
+        st.subheader("Aggregated Data")
         st.dataframe(
             agg_df.style.format({metric_name: "{:.2f}"}),
             use_container_width=True
         )
 
         # Display histogram
-        st.header("Day of Week Distribution")
+        st.subheader("Day of Week Distribution")
         fig_dow = analyze_workout_distribution(df, metric_name)
         st.plotly_chart(fig_dow, use_container_width=True)
 
 
-        # Display histogram
-        st.header("Distribution")
-        fig = create_histogram(df, metric_name, agg_type)
-        st.plotly_chart(fig, use_container_width=True)
-        
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
         st.write("Please check your selections and try again.")

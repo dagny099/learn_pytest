@@ -44,33 +44,6 @@ workout_dashboard/
 - Coverage reporting
 
 
-## Analytical Capabilities
-
-The dashboard is also designed to answer important questions about workout patterns:
-
-### Current Analysis
-- Basic statistical summaries
-- Metric distributions
-- Weekly/Monthly aggregations
-
-### Planned Analysis
-1. Day of Week Patterns
-   - Do workout intensities vary by day?
-   - Are weekend workouts consistently different?
-   - Which days show highest/lowest variation?
-
-2. Time Series Analysis
-   - Trend identification
-   - Seasonal patterns
-   - Performance forecasting
-   - Anomaly detection for data cleaning
-
-3. Performance Analysis
-   - Activity type comparisons
-   - Progress tracking
-   - Recovery pattern analysis
-
-
 ## Project Setup & Installation  
 Currently, this project uses a simple `requirements.txt` for dependency management to maintain focus on learning testing practices. Future versions will explore more sophisticated approaches (see Next Milestones below)
 
@@ -104,8 +77,37 @@ streamlit run src/app.py
 
 This project maintains detailed documentation in the `docs/` directory:
 
+- `testing_guide.md`: Introduction to the theory and practice of testing web applications, python flavor
 - `testing_cheatsheet.md`: Comprehensive guide to testing data science applications
 - `setup_guide.md`: In-depth explanation of Python project setup approaches
+
+
+## Analytical Capabilities
+
+The dashboard is also designed to answer important questions about workout patterns:
+
+### Current Analysis
+- Basic statistical summaries
+- Metric distributions
+- Weekly/Monthly aggregations
+
+### Planned Analysis
+1. Day of Week Patterns
+   - Do workout intensities vary by day?
+   - Are weekend workouts consistently different?
+   - Which days show highest/lowest variation?
+
+2. Time Series Analysis
+   - Trend identification
+   - Seasonal patterns
+   - Performance forecasting
+   - Anomaly detection for data cleaning
+
+3. Performance Analysis
+   - Activity type comparisons
+   - Progress tracking
+   - Recovery pattern analysis
+
 
 
 ## Next Milestones

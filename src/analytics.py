@@ -33,7 +33,13 @@ class WorkoutAnalytics:
         agg_map = {
             'sum': 'sum',
             'mean': 'mean',
-            'std': 'std'
+            'std': 'std',
+            'min': 'min',
+            'max': 'max',
+            'count': 'count',
+            'skew': 'skew',
+            'median': 'median',
+            'kurt': 'kurt'
         }
         
         agg_df = df.groupby('period')[metric].agg(agg_map[agg_type]).reset_index()
@@ -45,7 +51,10 @@ class WorkoutAnalytics:
             'std': df[metric].std(),
             'min': df[metric].min(),
             'max': df[metric].max(),
-            'count': len(df)
+            'count': len(df),
+            'skew': df[metric].skew(),
+            'median': df[metric].median(),
+            'kurt': df[metric].kurt()
         }
         
         return agg_df, summary_stats

@@ -16,19 +16,5 @@ pip install -r requirements.txt
 echo "Installing development dependencies..."
 pip install pytest pytest-cov
 
-# Create necessary directories
-echo "Creating project structure..."
-mkdir -p docs
-mkdir -p src
-mkdir -p tests
-
-# Copy documentation if it doesn't exist
-if [ ! -f docs/testing_cheatsheet.md ]; then
-    echo "Setting up documentation..."
-    touch docs/testing_cheatsheet.md
-    touch docs/development_journal.md
-    touch docs/setup_guide.md
-fi
-
 echo "Setup complete! Activate your virtual environment with:"
 echo "source venv/bin/activate"
